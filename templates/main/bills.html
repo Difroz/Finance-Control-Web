@@ -1,0 +1,25 @@
+{% extends 'base_1.html' %}
+{% if user.is_authenticated %}
+{% block title %}
+Счета
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Счета</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a class="btn btn-primary" href="{% url 'bill_add' %}" role="button">Добавить счет</a>
+    </div>
+</div>
+{% for el in object_list %}
+<div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">{{el.name}}</h4>
+    <p>{{el.value}}</p>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a class="btn btn-outline-warning" href="{% url 'bill_update' el.id %}" role="button">Редактировать</a>
+        <a class="btn btn-outline-danger" href="{% url 'bill_delete' el.id %}" role="button">Удалить</a>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+{% endif %}
