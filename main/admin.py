@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.forms import ModelChoiceField
-from .models import Cost, Category, Bill
+from .models import Transaction, Category, Bill
 
 
 class CostAdmin(admin.ModelAdmin):
@@ -13,5 +13,5 @@ class CostAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(Bill)
-admin.site.register(Cost, CostAdmin)
+admin.site.register(Transaction, CostAdmin)
 admin.site.register(Category)

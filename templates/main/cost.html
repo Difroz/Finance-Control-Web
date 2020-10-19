@@ -1,23 +1,22 @@
-{% extends 'base_1.html' %}
+{% extends 'base.html' %}
 {% if user.is_authenticated %}
 
 {% block title %}
-Расходы
+Транзакции
 {% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Расходы</h1>
+    <h1 class="h2">Транзакции</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a class="btn btn-primary" href="{% url 'cost_add' %}" role="button">Внести расход</a>
+        <a class="btn btn-primary" href="{% url 'cost_add' %}" role="button">Внести транзакцию</a>
     </div>
 </div>
 {% for el in object_list %}
 <div class="alert alert-success" role="alert">
 
-    <h4 class="alert-heading">{{el.category}}</h4>
-    <p>{{el.status}}</p>
-    <p>{{el.total}}</p>
+    <h5 class="alert-heading">{{el.category}} | {{el.status}}</h5>
+    <p><h4>{{el.total}} ₽</h4></p>
     <hr>
     <p class="mb-0">{{el.date}}</p>
     <hr>

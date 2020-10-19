@@ -1,13 +1,24 @@
-{% extends 'base_1.html' %}
+{% extends 'base.html' %}
 {% block title %}
-Добавить расход
+Добавить транзакцию
 {% endblock %}
 
 {% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Добавить Транзакцию</h1>
+</div>
 <form method="POST">
     {% csrf_token %}
-    {% load bootstrap %}
-    {{ form|bootstrap_horizontal:'col-lg-9' }}
+    {%for el in form%}
+    <div class="form-group">
+        <label>{{ el.label_tag }}</label>
+        <p>{{ el }}</p>
+        <small class="form-text text-muted">{{ el.help_text }}</small>
+    </div>
+    {% if el.errors %}<div class="alert alert-danger" role="alert">
+    {{ el.errors }}
+</div>{% endif %}
+    {% endfor %}
     <button type="submit" class="btn btn-primary">Добавить</button>
 </form>
 {% endblock %}

@@ -98,7 +98,7 @@ class BillView(ListView):
 class BillCreateView(LoginRequiredMixin, CreateView):
     model = Bill
     template_name = 'main/bill_add.html'
-    fields = ['name', 'value']
+    fields = ['name', 'value', 'save']
 
     def form_valid(self, form):
         form.instance.user = self.request.user

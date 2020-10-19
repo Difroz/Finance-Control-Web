@@ -16,10 +16,11 @@ User = get_user_model()
 class Bill(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, verbose_name='Название')
-    value = models.IntegerField(verbose_name='Сумма')
+    value = models.IntegerField(verbose_name='Баланс')
+    save = models.BooleanField(default=False, verbose_name='Сберегательный')
 
     def __str__(self):
-        return '{} : {}'.format(self.name, self.value)
+        return '{}'.format(self.name)
 
     def get_absolute_url(self):
         return reverse('bills')
@@ -48,13 +49,13 @@ class Category(models.Model):
 
 class Transaction(models.Model):
     CHOISE_STATUS = [
-        ('CT', 'Расход'),
-        ('IC', 'Доход'),
+        ('Расход', 'Расход'),
+        ('Доход', 'Доход'),
 
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Категория')
-    status = models.CharField(max_length=2, choices=CHOISE_STATUS, default='CT', verbose_name='Вид')
+    status = models.CharField(max_length=6, choices=CHOISE_STATUS, default='Расход', verbose_name='Вид')
     total = models.IntegerField(verbose_name='Сумма')
     bill = models.ForeignKey(Bill, on_delete=models.PROTECT, verbose_name='Счет')
     date = models.DateTimeField(auto_now_add=True)
@@ -71,26 +72,29 @@ class Transaction(models.Model):
 
     def save(self, *args, **kwargs):
         bill = Bill.objects.get(pk=self.bill.pk)
-        if self.pk:
-            print(self.was_total)
-            print(self.total)
-            bill.value = models.F('value') + self.was_total
-            bill.save()
-            bill.value = models.F('value') - self.total
-            bill.save()
-            return super(Transaction, self).save(*args, **kwargs)
-        else:
-            print(self.was_total)
-            bill.value = models.F('value')-self.total
-            bill.save()
-            return super(Transaction, self).save(*args, **kwargs)
+        if self.status == 'CT':
+            if self.pk:
+                bill.value = models.F('value') + self.was_total
+                bill.save()
+                bill.value = models.F('value') - self.total
+                bill.save()
+                return super(Transaction, self).save(*args, **kwargs)
+            else:
+                print(self.was_total)
+                bill.value = models.F('value')-self.total
+                bill.save()
+        return super(Transaction, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        bill = Bill.objects.get(pk=self.bill.pk)
-        bill.value = models.F('value') + self.total
-        bill.save()
-        super(Transaction, self).delete(*args, **kwargs)
+        if self.status == 'CT':
+            bill = Bill.objects.get(pk=self.bill.pk)
+            bill.value = models.F('value') + self.total
+            bill.save()
+            return super(Transaction, self).delete(*args, **kwargs)
+        return super(Transaction, self).delete(*args, **kwargs)
 
 
     class Meta:
         ordering = ['-date']
+        verbose_name = 'Транзация'
+        verbose_name_plural = 'Транзакции'

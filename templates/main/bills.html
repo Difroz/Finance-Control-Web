@@ -1,4 +1,4 @@
-{% extends 'base_1.html' %}
+{% extends 'base.html' %}
 {% if user.is_authenticated %}
 {% block title %}
 Счета
@@ -13,8 +13,8 @@
 </div>
 {% for el in object_list %}
 <div class="alert alert-success" role="alert">
-    <h4 class="alert-heading">{{el.name}}</h4>
-    <p>{{el.value}}</p>
+    <h5 class="alert-heading">{{el.name}}</h5>
+    <p><h4>{{el.value}} ₽</h4></p>
     <div class="btn-group" role="group" aria-label="Basic example">
         <a class="btn btn-outline-warning" href="{% url 'bill_update' el.id %}" role="button">Редактировать</a>
         <a class="btn btn-outline-danger" href="{% url 'bill_delete' el.id %}" role="button">Удалить</a>
