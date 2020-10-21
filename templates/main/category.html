@@ -21,6 +21,11 @@
     </div>
 </div>
 {% endfor %}
-{% endif %}
+{% else %}
+<div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">Нет объектов</h4>
+</div>
+    {% endif %}
+
 {% endblock %}
 {% endif %}

@@ -12,6 +12,7 @@
         <a class="btn btn-primary" href="{% url 'cost_add' %}" role="button">Внести транзакцию</a>
     </div>
 </div>
+{% if object_list %}
 {% for el in object_list %}
 <div class="alert alert-success" role="alert">
 
@@ -26,9 +27,10 @@
     </div>
 </div>
 {% endfor %}
-
-
-<!-- Modal -->
-
+{% else %}
+<div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">Нет объектов</h4>
+</div>
+    {% endif %}
 {% endblock %}
 {% endif %}
