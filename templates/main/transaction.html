@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% if user.is_authenticated %}
 
 {% block title %}
 Транзакции
@@ -8,29 +7,83 @@
 {% block content %}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Транзакции</h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
-        <a class="btn btn-primary" href="{% url 'cost_add' %}" role="button">Внести транзакцию</a>
-    </div>
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  добавить транзакцию
+</button>
+
+
+
+    <a href="{% url 'cost_add' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Внести транзакцию</a>
+    <form  class="text-center" method="get" action="{% url 'cost' %}">
+        <div class="form-group row">
+            <label for="start_date" class="col-2 col-form-label">От</label>
+            <div class="col-10">
+                <input name="start_date" class="form-control" type="date" value="" id="start_date">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="end_date" class="col-2 col-form-label">До</label>
+            <div class="col-10">
+                <input  name="end_date" class="form-control" type="date" value="" id="end_date">
+            </div>
+        </div>
+        <a href="{%url 'cost'%}" class="btn btn-primary">Отмена</a>
+        <button type="submit" class="btn btn-primary">Фильтр</button>
+    </form>
 </div>
 {% if object_list %}
-{% for el in object_list %}
-<div class="alert alert-success" role="alert">
+<table class="table table-bordered table-sm">
+    <thead>
+    <tr>
+        <th scope="col">Дата</th>
+        <th scope="col">Категория</th>
+        <th scope="col">Статус</th>
+        <th scope="col">Сумма</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for el in object_list %}
+    <tr>
+        <th scope="row">{{el.date}}</th>
+        <td>{{el.category}}</td>
+        <td>{{el.status}}</td>
+        <td>{{el.total}}</td>
+        <td><a href="">Редактировать</a></td>
+        <td><a href="">Удалить</a></td>
 
-    <h5 class="alert-heading">{{el.category}} | {{el.status}}</h5>
-    <p><h4>{{el.total}} ₽</h4></p>
-    <hr>
-    <p class="mb-0">{{el.date}}</p>
-    <hr>
-    <div class="btn-group" role="group" aria-label="Basic example">
-        <a class="btn btn-outline-warning" href="{% url 'cost_update' el.id %}" role="button">Редактировать</a>
-        <a class="btn btn-outline-danger" href="{% url 'cost_delete' el.id %}" role="button">Удалить</a>
-    </div>
-</div>
-{% endfor %}
+    </tr>
+  </tbody>
+    {% endfor %}
+</table>
+
 {% else %}
 <div class="alert alert-danger" role="alert">
     <h4 class="alert-heading">Нет объектов</h4>
 </div>
-    {% endif %}
-{% endblock %}
+
 {% endif %}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавить транзакцию</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form id="create_form"  action="{% url 'cost_add' %}" method="post">
+              {% csrf_token %}
+              {{form.as_p}}
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" form="create_form" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

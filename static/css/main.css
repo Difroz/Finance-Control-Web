@@ -1,0 +1,35 @@
+
+hr{
+ color: #ffffff;
+ background-color: #ffffff;
+ height: 2px;
+ width: 140px;
+ margin-top: 20px;
+ margin-bottom: 20px;
+}
+
+.header{
+ height:500px;
+
+ background: url('../images/fon.jpg') no-repeat center;
+ background-size: cover;
+
+ color: #ffffff;
+ text-align: center;
+}
+
+.container{
+ justify-content: center;
+ text-align: center;
+ padding: 10px
+ margin-top: 20px;
+ margin-bottom: 20px;
+}
+.info-href{
+ margin-top: 20px;
+ margin-bottom: 20px;
+}
+body{
+background-color: #f8f8f8;
+text-align: center;
+}

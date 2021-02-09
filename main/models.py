@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+
+import datetime as dt
 """
 Создание моделей для проекта:
 Таблица расходов
@@ -42,13 +44,18 @@ class Category(models.Model):
         return reverse('category')
 
 
-
-
-
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
 
+
+class TransactionManager(models.Manager):
+
+    def get_queryset(self):
+        today = dt.date.today()
+        timedelta_weak = dt.timedelta(days=1)
+        weak = today - timedelta_weak
+        return super().get_queryset().filter(date__gte=weak)
 
 class Transaction(models.Model):
     CHOISE_STATUS = [
@@ -56,12 +63,17 @@ class Transaction(models.Model):
         ('Доход', 'Доход'),
 
     ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Категория')
     status = models.CharField(max_length=6, choices=CHOISE_STATUS, default='Расход', verbose_name='Вид')
     total = models.PositiveIntegerField(verbose_name='Сумма')
     bill = models.ForeignKey(Bill, on_delete=models.PROTECT, verbose_name='Счет')
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True)
+
+    objects = models.Manager()
+
+    weak = TransactionManager()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

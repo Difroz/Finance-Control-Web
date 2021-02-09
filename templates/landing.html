@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <title>StartPage</title>
+</head>
+<body>
+<div class="header d-flex flex-column ">
+    <div class="nav mt-4 mb-4 d-flex justify-content-between">
+        <div class="col-2">
+            <h3>MoneyHolder</h3>
+        </div>
+        <div class="col-2 text-right id=login">
+            <a class="btn btn-outline-light rounded-0" href="{% url 'login' %}">Войти</a>
+        </div>
+    </div>
+    <div class="container mt-4">
+        <h1>
+            Инструмент для планирования и контроля своих расходов
+        </h1>
+        <p class="lead pt-2">
+            Web-приложение для управления личными финансами
+        </p>
+        <hr class="mt-4 mb-4">
+        <!-- Button trigger modal -->
+        <a class="btn btn-success rounded-0 pl-3 pr-3 pb-1 pt-1" href="{% url 'signup' %}">
+            <h5>начать сейчас</h5>
+        </a>
+    </div>
+    <a href="#first" class="info-href text-warning">Узнайте что может moneyholder</a>
+</div>
+<main class="main">
+    <div class="container-fluid" id="first" style="height:400px">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="pt-4 text-center" style="color:#28a745">Возмите под контроль свой бюджет</h2>
+        <hr class="mt-5 mb-5" style="background-color:#28a745; color:#28a745;">
+        </div>
+    </div>
+    </div>
+    <div class="container-fluid" id="second" style="height:400px; background-color: #ffffff;">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="pt-4 text-center" style="color:#28a745">Ставьте финансовые цели</h2>
+            <hr class="mt-5 mb-5" style="background-color:#28a745; color:#28a745">
+        </div>
+    </div>
+    </div>
+    <div class="container-fluid" id="tree" style="height:400px">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="pt-4 text-center" style="color:#28a745">Контролируйте свои расходы</h2>
+            <hr class="mt-5 mb-5" style="background-color:#28a745; color:#28a745">
+        </div>
+    </div>
+    </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>

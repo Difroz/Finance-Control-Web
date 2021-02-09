@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Транзакции
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Транзакции</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a class="btn btn-primary" href="{% url 'cost_add' %}" role="button">Внести транзакцию</a>
+    </div>
+</div>
+{% if object_list %}
+{% for el in object_list %}
+<div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">{{el.category}}</h4>
+    <span class="badge badge-warning">{{el.status}}</span>
+    <h6 class="text-muted mt-1">{{el.date}}</h6>
+    <p><h4>{{el.total}} ₽</h4></p>
+    <hr style="width:100%">
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a class="btn btn-outline-warning" href="{% url 'cost_update' el.id %}" role="button">Редактировать</a>
+        <a class="btn btn-outline-danger" href="{% url 'cost_delete' el.id %}" role="button">Удалить</a>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">Нет объектов</h4>
+</div>
+{% endif %}
+{% endblock %}

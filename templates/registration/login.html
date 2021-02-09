@@ -4,10 +4,31 @@
 {% endblock %}
 
 
-{% block content %}
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Войти</button>
-</form>
+{% block body %}
+<div class="container-fluid  mt-5">
+    <div class="row justify-content-center mt-5" >
+        <div class="col-3 d-flex justify-content-center bg-white">
+            <form class="form-signin mt-2 mb-2" method="post">
+                {% csrf_token %}
+                <div class="text-center mb-4">
+                    <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+                    <h1 class="h3 mb-3 font-weight-normal">MoneyHolder</h1>
+                </div>
+                {%for el in form%}
+                <div class="form-group">
+                    <label>{{ el.label_tag }}</label>
+                    <p>{{ el }}</p>
+                    <small class="form-text text-muted">{{ el.help_text }}</small>
+                </div>
+                {% if el.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ el.errors }}
+                </div>
+                {% endif %}
+                {% endfor %}
+                <button class="btn btn-primary btn-block" type="submit">Войти</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
